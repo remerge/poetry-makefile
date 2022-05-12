@@ -28,8 +28,6 @@ jobs:
           key: pre-commit|${{ hashFiles('.pre-commit-config.yaml') }}
       - run: pipx install pre-commit
 
-      # poetry
-
       # target
       - run: make check
 
