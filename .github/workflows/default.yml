@@ -13,14 +13,22 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      # pre-commit
+      # python
       - uses: actions/setup-python@v3
+        with:
+          cache: poetry
+
+      # pre-commit
       - uses: actions/cache@v3
         if: ${{ !env.ACT }}
         with:
           path: ~/.cache/pre-commit
           key: pre-commit|${{ hashFiles('.pre-commit-config.yaml') }}
       - run: pip install pre-commit
+
+      # poetry
+      - run: pip install poetry
+      - run: poetry install
 
       # target
       - run: make check
@@ -33,6 +41,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+
+      # python
+      - uses: actions/setup-python@v3
+        with:
+          cache: poetry
+
+      # poetry
+      - run: pip install poetry
+      - run: poetry install
 
       # target
       - run: make install
